@@ -86,10 +86,11 @@ export class FoundPetsService {
     if (matches.length === 0) return;
 
     const genericTo = this.config.get<string>('NOTIFY_EMAIL');
-    const accessToken = this.config.get<string>('MAPBOX_ACCESS_TOKEN');
+    const accessToken = this.config.get<string>('MAPBOX_TOKEN');
+    const defaultGeneric = this.config.get<string>('MAILER_EMAIL');
 
     for (const lost of matches) {
-      const to = genericTo || lost.ownerEmail;
+      const to = genericTo || defaultGeneric || lost.ownerEmail;
       const lostLL = pointToLngLat(lost.location as Point);
       const foundLL = pointToLngLat(found.location as Point);
       const mapUrl =

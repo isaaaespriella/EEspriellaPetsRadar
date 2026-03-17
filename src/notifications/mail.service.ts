@@ -8,17 +8,29 @@ export class MailService {
   private readonly transporter;
 
   constructor(private readonly config: ConfigService) {
-    this.transporter = nodemailer.createTransport({
-      host: this.config.get<string>('SMTP_HOST'),
-      port: Number(this.config.get<string>('SMTP_PORT', '587')),
-      secure: this.config.get<string>('SMTP_SECURE', 'false') === 'true',
-      auth: this.config.get<string>('SMTP_USER')
+    const service = this.config.get<string>('MAILER_SERVICE');
+    const email = this.config.get<string>('MAILER_EMAIL');
+    const password = this.config.get<string>('MAILER_PASSWORD');
+    const host = this.config.get<string>('SMTP_HOST');
+
+    this.transporter = nodemailer.createTransport(
+      service
         ? {
-            user: this.config.get<string>('SMTP_USER'),
-            pass: this.config.get<string>('SMTP_PASS'),
+            service,
+            auth: email && password ? { user: email, pass: password } : undefined,
           }
-        : undefined,
-    });
+        : {
+            host,
+            port: Number(this.config.get<string>('SMTP_PORT', '587')),
+            secure: this.config.get<string>('SMTP_SECURE', 'false') === 'true',
+            auth: this.config.get<string>('SMTP_USER')
+              ? {
+                  user: this.config.get<string>('SMTP_USER'),
+                  pass: this.config.get<string>('SMTP_PASS'),
+                }
+              : undefined,
+          },
+    );
   }
 
   async sendMatchEmail(params: {
@@ -26,7 +38,10 @@ export class MailService {
     subject: string;
     html: string;
   }) {
-    const from = this.config.get<string>('MAIL_FROM', 'petradar@localhost');
+    const from =
+      this.config.get<string>('MAIL_FROM') ||
+      this.config.get<string>('MAILER_EMAIL') ||
+      'petradar@localhost';
     try {
       await this.transporter.sendMail({
         from,
