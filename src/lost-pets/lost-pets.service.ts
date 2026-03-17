@@ -10,13 +10,29 @@ import { MailService } from '../notifications/mail.service';
 export class LostPetsService {
   constructor(
     @InjectRepository(LostPetEntity)
-    private readonly lostPetRepository: Repository<LostPetEntity>, // 👈 repo correcto
+    private readonly lostPetRepository: Repository<LostPetEntity>, 
   
-    private readonly mailService: MailService, // 👈 mail bien inyectado
+    private readonly mailService: MailService, 
   ) {}
   async create(dto: CreateLostPetDto) {
 
-  
+    const lost = this.lostPetRepository.create({
+      name: dto.name,
+      species: dto.species,
+      breed: dto.breed,
+      color: dto.color,
+      size: dto.size,
+      description: dto.description,
+      photo_url: dto.photo_url,
+      owner_name: dto.ownerName,
+      owner_email: dto.ownerEmail,
+      owner_phone: dto.ownerPhone,
+      address: dto.address,
+      lost_date: dto.lostDate,
+      location: toPoint({ lng: dto.lng, lat: dto.lat }),
+    });
+    await this.lostPetRepository.save(lost);
+
     await this.mailService.sendMatchEmail({
       to: 'elenaespri@gmail.com',
       subject: '🐾 Nueva mascota perdida',

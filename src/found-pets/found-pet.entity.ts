@@ -1,61 +1,20 @@
-import type { Point } from 'geojson';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity({ name: 'found_pets' })
+@Entity('found_pets')
 export class FoundPetEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
-  @Column({ type: 'varchar' })
-  species!: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  breed!: string | null;
-
-  @Column({ type: 'varchar' })
-  color!: string;
-
-  @Column({ type: 'varchar' })
-  size!: string;
-
-  @Column({ type: 'text' })
-  description!: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  photoUrl!: string | null;
-
-  @Column({ type: 'varchar' })
-  finderName!: string;
-
-  @Column({ type: 'varchar' })
-  finderEmail!: string;
-
-  @Column({ type: 'varchar' })
-  finderPhone!: string;
-
-  @Column({
-    type: 'geometry',
-    spatialFeatureType: 'Point',
-    srid: 4326,
-  })
-  location!: Point;
-
-  @Column({ type: 'varchar' })
-  address!: string;
-
-  @Column({ type: 'timestamp' })
-  foundDate!: Date;
-
-  @CreateDateColumn({ type: 'timestamp' })
-  createdAt!: Date;
-
-  @UpdateDateColumn({ type: 'timestamp' })
-  updatedAt!: Date;
+  @PrimaryGeneratedColumn() id: number;
+  @Column() species: string;
+  @Column({ nullable: true }) breed?: string;
+  @Column() color: string;
+  @Column() size: string;
+  @Column({ nullable: true }) description?: string;
+  @Column({ nullable: true }) photo_url?: string;
+  @Column() finder_name: string;
+  @Column() finder_email: string;
+  @Column() finder_phone: string;
+  @Column('geography', { spatialFeatureType: 'Point', srid: 4326 }) location: object;
+@Column() address: string;
+  @Column('timestamp') found_date: Date;
+  @CreateDateColumn() created_at: Date;
+  @UpdateDateColumn() updated_at: Date;
 }
-

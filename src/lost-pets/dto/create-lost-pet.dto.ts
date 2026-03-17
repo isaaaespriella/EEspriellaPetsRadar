@@ -1,79 +1,19 @@
-import {
-  IsBoolean,
-  IsDate,
-  IsEmail,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-  IsUrl,
-  Max,
-  Min,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString, IsNumber, IsDate } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateLostPetDto {
-  @IsString()
-  @IsNotEmpty()
-  name!: string;
-
-  @IsString()
-  @IsNotEmpty()
-  species!: string;
-
-  @IsString()
-  @IsNotEmpty()
-  breed!: string;
-
-  @IsString()
-  @IsNotEmpty()
-  color!: string;
-
-  @IsString()
-  @IsNotEmpty()
-  size!: string;
-
-  @IsString()
-  @IsNotEmpty()
-  description!: string;
-
-  @IsOptional()
-  @IsUrl()
-  photoUrl?: string;
-
-  @IsString()
-  @IsNotEmpty()
-  ownerName!: string;
-
-  @IsEmail()
-  ownerEmail!: string;
-
-  @IsString()
-  @IsNotEmpty()
-  ownerPhone!: string;
-
-  @Type(() => Number)
-  @IsNumber()
-  @Min(-180)
-  @Max(180)
-  lng!: number;
-
-  @Type(() => Number)
-  @IsNumber()
-  @Min(-90)
-  @Max(90)
-  lat!: number;
-
-  @IsString()
-  @IsNotEmpty()
-  address!: string;
-
-  @Type(() => Date)
-  @IsDate()
-  lostDate!: Date;
-  
-  @IsOptional()
-  @IsBoolean()
-  isActive?: boolean;
+  @IsNotEmpty() @IsString() name: string;
+  @IsNotEmpty() @IsString() species: string;
+  @IsOptional() @IsString() breed?: string;
+  @IsNotEmpty() @IsString() color: string;
+  @IsNotEmpty() @IsString() size: string;
+  @IsOptional() @IsString() description?: string;
+  @IsOptional() @IsString() photo_url?: string;
+  @IsNotEmpty() @IsString() ownerName: string;
+  @IsNotEmpty() @IsEmail() ownerEmail: string;
+  @IsNotEmpty() @IsString() ownerPhone: string;
+  @IsNotEmpty() @IsNumber() lng: number;
+  @IsNotEmpty() @IsNumber() lat: number;
+  @IsNotEmpty() @IsString() address: string;
+  @IsNotEmpty() @Type(() => Date) @IsDate() lostDate: Date;
 }
-

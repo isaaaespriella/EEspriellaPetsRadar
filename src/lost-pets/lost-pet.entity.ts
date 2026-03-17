@@ -1,67 +1,34 @@
-import type { Point } from 'geojson';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity({ name: 'lost_pets' })
+@Entity('lost_pets')
 export class LostPetEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryGeneratedColumn() id: number;
 
-  @Column({ type: 'varchar' })
-  name!: string;
+  @Column() name: string;
+  @Column() species: string;
+  @Column({ nullable: true }) breed?: string;
+  @Column() color: string;
+  @Column() size: string;
+  @Column({ nullable: true }) description?: string;
+  @Column({ nullable: true }) photo_url?: string;
 
-  @Column({ type: 'varchar' })
-  species!: string;
+  @Column()
+  owner_name: string;
+  
+  @Column()
+  owner_email: string;
+  
+  @Column()
+  owner_phone: string;
 
-  @Column({ type: 'varchar' })
-  breed!: string;
+  @Column('geography', { spatialFeatureType: 'Point', srid: 4326 })
+location: object;
 
-  @Column({ type: 'varchar' })
-  color!: string;
+  @Column() address: string;
+  @Column('timestamp') lost_date: Date;
 
-  @Column({ type: 'varchar' })
-  size!: string;
+  @Column({ default: true }) is_active: boolean;
 
-  @Column({ type: 'text' })
-  description!: string;
-
-  @Column({ type: 'varchar', nullable: true })
-  photoUrl!: string | null;
-
-  @Column({ type: 'varchar' })
-  ownerName!: string;
-
-  @Column({ type: 'varchar' })
-  ownerEmail!: string;
-
-  @Column({ type: 'varchar' })
-  ownerPhone!: string;
-
-  @Column({
-    type: 'geometry',
-    spatialFeatureType: 'Point',
-    srid: 4326,
-  })
-  location!: Point;
-
-  @Column({ type: 'varchar' })
-  address!: string;
-
-  @Column({ type: 'timestamp' })
-  lostDate!: Date;
-
-  @Column({ type: 'boolean', default: true })
-  isActive!: boolean;
-
-  @CreateDateColumn({ type: 'timestamp' })
-  createdAt!: Date;
-
-  @UpdateDateColumn({ type: 'timestamp' })
-  updatedAt!: Date;
+  @CreateDateColumn() created_at: Date;
+  @UpdateDateColumn() updated_at: Date;
 }
-
