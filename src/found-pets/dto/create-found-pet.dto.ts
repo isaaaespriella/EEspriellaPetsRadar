@@ -7,6 +7,7 @@ import {
   IsUrl,
   Max,
   Min,
+  IsDate,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -63,6 +64,6 @@ export class CreateFoundPetDto {
   address!: string;
 
   @Type(() => Date)
+  @IsDate()
   foundDate!: Date;
 }
-

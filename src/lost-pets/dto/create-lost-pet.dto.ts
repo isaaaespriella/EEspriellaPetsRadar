@@ -1,5 +1,6 @@
 import {
   IsBoolean,
+  IsDate,
   IsEmail,
   IsNotEmpty,
   IsNumber,
@@ -68,8 +69,9 @@ export class CreateLostPetDto {
   address!: string;
 
   @Type(() => Date)
+  @IsDate()
   lostDate!: Date;
-
+  
   @IsOptional()
   @IsBoolean()
   isActive?: boolean;
