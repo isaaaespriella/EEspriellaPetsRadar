@@ -53,6 +53,14 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Base de datos (PostGIS)
+
+Opción rápida con Docker:
+
+```bash
+docker compose up -d
+```
+
 ## Endpoints
 
 - `POST /lost-pets`
