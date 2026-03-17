@@ -23,13 +23,22 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+PetRadar API (NestJS + Postgres/PostGIS) para registrar mascotas perdidas y encontradas. Al registrar una mascota encontrada, busca mascotas perdidas activas en un radio de 500 metros y envía un correo con un mapa estático de Mapbox.
 
 ## Project setup
 
 ```bash
 $ npm install
 ```
+
+## Variables de entorno
+
+Copia `.env.example` a `.env` y completa:
+
+- `DB_*`: conexión a Postgres (con PostGIS habilitado)
+- `SMTP_*` y `MAIL_FROM`: envío de correo (Nodemailer)
+- `NOTIFY_EMAIL`: si se define, todos los correos se envían a este correo genérico (si no, se envía a `ownerEmail`)
+- `MAPBOX_ACCESS_TOKEN`: para el mapa estático
 
 ## Compile and run the project
 
@@ -43,6 +52,11 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+
+## Endpoints
+
+- `POST /lost-pets`
+- `POST /found-pets` (dispara búsqueda por radio + correo)
 
 ## Run tests
 
