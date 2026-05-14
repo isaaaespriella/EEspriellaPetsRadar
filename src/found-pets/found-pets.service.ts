@@ -68,6 +68,7 @@ export class FoundPetsService {
       radiusMeters: 500,
       count: matches.length,
     });
+    // final
 
     await this.notify(matches, found);
 
