@@ -1,3 +1,6 @@
+import { config as loadDotenv } from 'dotenv';
+loadDotenv();
+
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';

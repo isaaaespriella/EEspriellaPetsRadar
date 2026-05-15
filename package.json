@@ -32,6 +32,7 @@
     "cache-manager": "^6.4.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
+    "dotenv": "^16.4.7",
     "env-var": "^7.5.0",
     "ioredis": "^5.10.1",
     "keyv": "^5.3.1",

@@ -13,6 +13,7 @@ services:
       PORT: 3001
       REDIS_HOST: 172.17.0.1
       REDIS_PORT: "6379"
+      APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=fde0db05-b150-4b42-aedb-590cb6b14d48;IngestionEndpoint=https://mexicocentral-0.in.applicationinsights.azure.com/;LiveEndpoint=https://mexicocentral.livediagnostics.monitor.azure.com/;ApplicationId=916b1f56-eaa4-4153-af7e-85f233eebc12"
     ports:
       - "3001:3001"
     depends_on:
