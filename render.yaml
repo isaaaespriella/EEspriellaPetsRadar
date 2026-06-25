@@ -17,7 +17,7 @@ services:
     plan: free
     region: oregon
     dockerfilePath: ./Dockerfile
-    healthCheckPath: /
+    healthCheckPath: /lost-pets
     envVars:
       - key: REDIS_URL
         fromService:
