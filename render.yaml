@@ -19,6 +19,8 @@ services:
     dockerfilePath: ./Dockerfile
     healthCheckPath: /lost-pets
     envVars:
+      - key: NODE_OPTIONS
+        value: "--dns-result-order=ipv4first"
       - key: REDIS_URL
         fromService:
           type: redis
