@@ -7,21 +7,29 @@ import { logger } from '../config/logger';
 @Injectable()
 export class MailService {
   private readonly logger = new Logger(MailService.name);
-  private readonly transporter;
+  private readonly transporter: nodemailer.Transporter<SMTPTransport.SentMessageInfo>;
 
   constructor(private readonly config: ConfigService) {
-    this.transporter = nodemailer.createTransport({
-      host: this.config.get<string>('SMTP_HOST') || 'smtp.gmail.com',
+    const transportOptions: SMTPTransport.Options = {
+      host: this.config.get<string>('SMTP_HOST')!,
       port: Number(this.config.get<string>('SMTP_PORT', '587')),
-      secure: this.config.get<string>('SMTP_SECURE', 'false') === 'true',
-      family: 4,
-      auth: {
-        user: this.config.get<string>('SMTP_USER'),
-        pass: this.config.get<string>('SMTP_PASS'),
-      },
-    } as SMTPTransport.Options);
+      secure: false,
+      requireTLS: true,
     
 
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
+
+      auth: {
+        user: this.config.get<string>('SMTP_USER')!,
+        pass: this.config.get<string>('SMTP_PASS')!,
+      },
+    };
+
+    this.transporter = nodemailer.createTransport(transportOptions);
+
+    // 🔥 VERIFY FUERA del objeto
     this.transporter.verify((error) => {
       if (error) {
         console.error('SMTP VERIFY ERROR:', error);
