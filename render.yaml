@@ -1,0 +1,60 @@
+databases:
+  - name: pet-radar-db
+    plan: free
+    region: oregon
+    postgresMajorVersion: "16"
+
+services:
+  - type: redis
+    name: pet-radar-redis
+    plan: free
+    region: oregon
+    ipAllowList: []
+
+  - type: web
+    name: pet-radar-api
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: pet-radar-redis
+          property: connectionString
+      - key: DB_HOST
+        fromDatabase:
+          name: pet-radar-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: pet-radar-db
+          property: port
+      - key: DB_USER
+        fromDatabase:
+          name: pet-radar-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: pet-radar-db
+          property: password
+      - key: DB_NAME
+        fromDatabase:
+          name: pet-radar-db
+          property: database
+      - key: DB_SYNC
+        value: "true"
+      - key: MAPBOX_TOKEN
+        sync: false
+      - key: MAILER_EMAIL
+        sync: false
+      - key: MAILER_PASSWORD
+        sync: false
+      - key: MAILER_SERVICE
+        value: "gmail"
+      - key: NOTIFY_EMAIL
+        sync: false
+      - key: APPLICATIONINSIGHTS_CONNECTION_STRING
+        sync: false
